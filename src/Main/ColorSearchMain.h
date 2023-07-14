@@ -16,6 +16,7 @@
 #include "ColorResultsPrinter/AsciiContinuousColorResultsPrinter.h"
 #include "ColorResultsPrinter/BinaryContinuousColorResultsPrinter.h"
 #include "ColorResultsPrinter/CsvContinuousColorResultsPrinter.h"
+#include "ColorResultsPrinter/PackedIntContinuousColorResultsPrinter.h"
 #include "ColorSearcher/ContinuousColorSearcher.h"
 #include "IndexFileParser/ContinuousIndexFileParser.h"
 #include "Main/Main.h"
@@ -29,7 +30,8 @@ using std::variant;
 using ColorResultsPrinter = variant<
   AsciiContinuousColorResultsPrinter,
   BinaryContinuousColorResultsPrinter,
-  CsvContinuousColorResultsPrinter>;
+  CsvContinuousColorResultsPrinter,
+  PackedIntContinuousColorResultsPrinter>;
 
 class ColorSearchMain: public Main {
 private:

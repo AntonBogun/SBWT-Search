@@ -6,7 +6,7 @@
 # CMakeLists.txt file within them is also executed (sequentially).  Since we
 # will be using CUDA and HIP, we want to use a pretty high version of CMake.
 
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.20)
 
 project(
   "SBWT Search"

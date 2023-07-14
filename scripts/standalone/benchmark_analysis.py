@@ -33,11 +33,13 @@ file_to_alias = {
     'zipped_seqs': 'Zipped',
     'AsciiIndexes': 'ASCII',
     'BinaryIndexes': 'Binary',
+    'PackedIntIndexes': 'Packed Int'
 }
 format_to_alias = {
     'ascii': 'ASCII',
     'binary': 'Binary',
     'bool': 'Boolean',
+    'packedint': 'Packed Int'
 }
 
 ordered_components = [
@@ -114,7 +116,9 @@ parser.add_argument(
     choices=['Index', 'Color'],
     required=True,
 )
-args = vars(parser.parse_args())
+#!DEBUG
+args = vars(parser.parse_args(["-i","/scratch/dongelr1/bogunant/SBWT-Search/benchmark_results/index_d20_2023-07-13_23-40-34_+0300/","-d","20","-t","Index"]))
+# args = vars(parser.parse_args())
 
 
 class DataFrameGenerator:
@@ -263,7 +267,7 @@ class DataFrameGenerator:
             self.batch_parser(d['log']['message'])
         )
 
-    def batch_parser(self, message: str) -> int | None:
+    def batch_parser(self, message: str):
         match = re.match(r'batch (\d*)', message)
         if match:
             return match.groups()[0]
@@ -286,7 +290,7 @@ class DataFrameGenerator:
         self.dfs.append(df)
 
 
-def filter_df_by_series(df: pd.DataFrame, s: pd.Series | dict) -> pd.DataFrame:
+def filter_df_by_series(df: pd.DataFrame, s: pd.Series) -> pd.DataFrame:
     for key, value in s.items():
         df = df[df[key] == value]
     return df

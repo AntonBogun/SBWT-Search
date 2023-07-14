@@ -219,6 +219,9 @@ auto IndexSearchMain::get_results_printer_bits_per_element() -> u64 {
   if (get_args().get_print_mode() == "bool") {
     return BoolContinuousIndexResultsPrinter::get_bits_per_element();
   }
+    if (get_args().get_print_mode() == "packedint") {
+    return PackedIntContinuousIndexResultsPrinter::get_bits_per_element(max_index);
+  }
   throw runtime_error("Invalid value passed by user for argument print_mode");
 }
 
@@ -229,6 +232,9 @@ auto IndexSearchMain::get_results_printer_bits_per_seq() -> u64 {
   }
   if (get_args().get_print_mode() == "bool") {
     return BinaryContinuousIndexResultsPrinter::get_bits_per_seq();
+  }
+  if (get_args().get_print_mode() == "packedint") {
+    return PackedIntContinuousIndexResultsPrinter::get_bits_per_seq();
   }
   throw runtime_error("Invalid value passed by user for argument print_mode");
 }
@@ -390,6 +396,21 @@ auto IndexSearchMain::get_results_printer(
       max_chars_per_batch,
       max_seqs_per_batch,
       get_args().get_write_headers()
+    ));
+  }
+  if (get_args().get_print_mode() == "packedint") {
+    return make_shared<IndexResultsPrinter>(PackedIntContinuousIndexResultsPrinter(
+      stream_id,
+      searcher,
+      interval_batch_producer,
+      invalid_chars_producer,
+      output_filenames,
+      kmer_size,
+      get_threads(),
+      max_chars_per_batch,
+      max_seqs_per_batch,
+      get_args().get_write_headers(),
+      max_index
     ));
   }
   throw runtime_error("Invalid value passed by user for argument print_mode");

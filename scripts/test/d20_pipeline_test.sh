@@ -17,20 +17,24 @@ fi
 index_modes=(
   "ascii"
   "binary"
+  "packedint"
 )
 index_extensions=(
   ".txt"
   ".bin"
+  ".pint"
 )
 colors_modes=(
   "ascii"
   "binary"
   "csv"
+  "packedint"
 )
 colors_extensions=(
   ".txt"
   ".bin"
   ".csv"
+  ".pint"
 )
 
 bad_exits=0
@@ -43,7 +47,7 @@ function run_tests() {
     do
       expected="test_objects/full_pipeline/color_search/expected/${file%.*}.colors.txt"
       actual="tmp/d20_pipeline_test/actual/${file%.*}.colors${extension}"
-      python3 scripts/test/verify_color_results_equal.py \
+      python scripts/test/verify_color_results_equal.py \
         -x ${expected} \
         -y ${actual} \
         --quiet

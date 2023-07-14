@@ -9,6 +9,7 @@
 #include "IndexFileParser/AsciiIndexFileParser.h"
 #include "IndexFileParser/BinaryIndexFileParser.h"
 #include "IndexFileParser/ContinuousIndexFileParser.h"
+#include "IndexFileParser/PackedIntIndexFileParser.h"
 #include "Tools/IOUtils.h"
 #include "Tools/Logger.h"
 
@@ -91,6 +92,10 @@ auto ContinuousIndexFileParser::start_new_file(const string &filename) -> void {
     );
   } else if (file_format == "binary") {
     index_file_parser = make_unique<BinaryIndexFileParser>(
+      std::move(in_stream), max_indexes_per_batch, max_seqs_per_batch, warp_size
+    );
+  } else if (file_format == "packedint") {
+    index_file_parser = make_unique<PackedIntIndexFileParser>(
       std::move(in_stream), max_indexes_per_batch, max_seqs_per_batch, warp_size
     );
   } else {

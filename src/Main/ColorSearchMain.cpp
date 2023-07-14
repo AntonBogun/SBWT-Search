@@ -211,6 +211,9 @@ auto ColorSearchMain::get_results_printer_bits_per_seq() -> u64 {
   if (get_args().get_print_mode() == "csv") {
     return CsvContinuousColorResultsPrinter::get_bits_per_seq(num_colors);
   }
+  if (get_args().get_print_mode() == "packedint") {
+    return PackedIntContinuousColorResultsPrinter::get_bits_per_seq(num_colors);
+  }
   throw runtime_error("Invalid value passed by user for argument print_mode");
 }
 
@@ -335,6 +338,21 @@ auto ColorSearchMain::get_results_printer(
   }
   if (get_args().get_print_mode() == "csv") {
     return make_shared<ColorResultsPrinter>(CsvContinuousColorResultsPrinter(
+      stream_id,
+      index_file_parser->get_seq_statistics_batch_producer(),
+      std::move(colors_batch_producer),
+      filenames,
+      num_colors,
+      get_args().get_threshold(),
+      get_args().get_include_not_found(),
+      get_args().get_include_invalid(),
+      get_threads(),
+      max_seqs_per_batch,
+      get_args().get_write_headers()
+    ));
+  }
+  if (get_args().get_print_mode() == "packedint") {
+    return make_shared<ColorResultsPrinter>(PackedIntContinuousColorResultsPrinter(
       stream_id,
       index_file_parser->get_seq_statistics_batch_producer(),
       std::move(colors_batch_producer),

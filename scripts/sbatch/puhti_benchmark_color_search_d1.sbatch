@@ -1,8 +1,6 @@
 #!/bin/bash
 
-# This will configure items for benchmarking and then run the benchmarks
-# through the scripts/standalone/benchmark.sh script. Meant to be run on Puhti
-# supercomputer by CSC: https://research.csc.fi/-/puhti
+# Meant to be run on Puhti supercomputer by CSC: https://research.csc.fi/-/puhti
 
 #SBATCH --job-name=SBWT_colors_d1
 #SBATCH --account=dongelr1

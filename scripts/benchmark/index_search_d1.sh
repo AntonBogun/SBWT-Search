@@ -28,6 +28,7 @@ output_file="benchmark_objects/list_files/output/index_search_results_running.li
 printing_modes=(
   "ascii"
   "binary"
+  "packedint"
   "bool"
 )
 

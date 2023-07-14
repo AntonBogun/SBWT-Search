@@ -20,11 +20,13 @@ modes=(
   "ascii"
   "binary"
   "bool"
+  "packedint"
 )
 extensions=(
   ".txt"
   ".bin"
   ".bool"
+  ".pint"
 )
 
 bad_exits=0
@@ -37,7 +39,7 @@ function run_tests() {
     do
       expected="test_objects/full_pipeline/index_search/expected/${file}"
       actual="tmp/index_pipeline_test/actual/${no_extension}${extension}"
-      python3 scripts/test/verify_index_results_equal.py \
+      python scripts/test/verify_index_results_equal.py \
         -x ${expected} \
         -y ${actual} \
         --quiet

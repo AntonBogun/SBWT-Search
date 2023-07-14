@@ -1,9 +1,6 @@
 #!/bin/bash
 
-# This will configure items for benchmarking and then run the benchmarks
-# through the scripts/standalone/benchmark.sh script. Meant to be run on Mahti
-# supercomputer by CSC: https://research.csc.fi/-/mahti
-
+# Meant to be run on LUMI supercomputer by CSC: https://www.csc.fi/lumi
 #SBATCH --job-name=SBWT_colors_d20
 #SBATCH --account=dongelr1
 #SBATCH --error colors_d20_err.txt

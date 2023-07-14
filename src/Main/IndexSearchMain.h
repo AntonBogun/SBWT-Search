@@ -17,6 +17,7 @@
 #include "IndexResultsPrinter/AsciiContinuousIndexResultsPrinter.h"
 #include "IndexResultsPrinter/BinaryContinuousIndexResultsPrinter.h"
 #include "IndexResultsPrinter/BoolContinuousIndexResultsPrinter.h"
+#include "IndexResultsPrinter/PackedIntContinuousIndexResultsPrinter.h"
 #include "IndexSearcher/ContinuousIndexSearcher.h"
 #include "Main/Main.h"
 #include "PositionsBuilder/ContinuousPositionsBuilder.h"
@@ -35,7 +36,8 @@ using std::vector;
 using IndexResultsPrinter = variant<
   AsciiContinuousIndexResultsPrinter,
   BinaryContinuousIndexResultsPrinter,
-  BoolContinuousIndexResultsPrinter>;
+  BoolContinuousIndexResultsPrinter,
+  PackedIntContinuousIndexResultsPrinter>;
 
 class IndexSearchMain: public Main {
 public:
@@ -68,9 +70,7 @@ private:
       vector<shared_ptr<ContinuousPositionsBuilder>>,
       vector<shared_ptr<ContinuousIndexSearcher>>,
       vector<shared_ptr<IndexResultsPrinter>>>;
-  auto load_input_output_filenames(
-    const string &input_file, const string &output_file
-  ) -> void;
+
   auto get_input_output_filenames()
     -> tuple<vector<vector<string>>, vector<vector<string>>>;
   auto get_results_printer(

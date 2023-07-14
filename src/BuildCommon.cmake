@@ -184,6 +184,7 @@ add_library(
   "${PROJECT_SOURCE_DIR}/IndexResultsPrinter/AsciiContinuousIndexResultsPrinter.cpp"
   "${PROJECT_SOURCE_DIR}/IndexResultsPrinter/BinaryContinuousIndexResultsPrinter.cpp"
   "${PROJECT_SOURCE_DIR}/IndexResultsPrinter/BoolContinuousIndexResultsPrinter.cpp"
+  "${PROJECT_SOURCE_DIR}/IndexResultsPrinter/PackedIntContinuousIndexResultsPrinter.cpp"
 )
 target_link_libraries(index_results_printer PRIVATE io_utils fmt::fmt OpenMP::OpenMP_CXX libjeaiii_itoa)
 
@@ -195,6 +196,7 @@ add_library(
   "${PROJECT_SOURCE_DIR}/IndexFileParser/IndexFileParser.cpp"
   "${PROJECT_SOURCE_DIR}/IndexFileParser/AsciiIndexFileParser.cpp"
   "${PROJECT_SOURCE_DIR}/IndexFileParser/BinaryIndexFileParser.cpp"
+  "${PROJECT_SOURCE_DIR}/IndexFileParser/PackedIntIndexFileParser.cpp"
 
   "${PROJECT_SOURCE_DIR}/IndexFileParser/SeqStatisticsBatchProducer.cpp"
   "${PROJECT_SOURCE_DIR}/IndexFileParser/IndexesBatchProducer.cpp"
@@ -239,6 +241,7 @@ add_library(
   "${PROJECT_SOURCE_DIR}/ColorResultsPrinter/AsciiContinuousColorResultsPrinter.cpp"
   "${PROJECT_SOURCE_DIR}/ColorResultsPrinter/BinaryContinuousColorResultsPrinter.cpp"
   "${PROJECT_SOURCE_DIR}/ColorResultsPrinter/CsvContinuousColorResultsPrinter.cpp"
+  "${PROJECT_SOURCE_DIR}/ColorResultsPrinter/PackedIntContinuousColorResultsPrinter.cpp"
 )
 target_link_libraries(color_results_printer PRIVATE io_utils fmt::fmt OpenMP::OpenMP_CXX libjeaiii_itoa)
 

@@ -124,6 +124,39 @@ class CsvParser(FileParser):
         return ("result", next_index)
 
 
+
+class PackedIntParser(FileParser):
+    def __init__(self, f: io.BytesIO):
+        self.version = "v1.0"
+        FileParser.__init__(self, f, self.version)
+
+    def get_next(self) -> tuple[str, int]:
+        i=0
+        b = self.f.read(1)
+        if len(b)==0:
+            return ("EOF", )
+        c = b[0]
+        if not(c&0x80):
+            if c==0b01000010:
+                return ("newline", )
+            elif c&0b01000000:
+                raise RuntimeError(f"invalid special character: {bin(c)}")
+            else:
+                return ("result", c)
+        n=c&0x7f
+        while True:
+            i+=1
+            if(i>9):
+                raise RuntimeError(f"int too long ({i}): {bin(n)}")
+            b=self.f.read(1)
+            if len(b) == 0:
+                return ("EOF", )
+            c=b[0]
+            n|=((c&0x7f)<<i)
+            if not(c&0x80):
+                return ("result",n)
+
+
 with ExitStack() as stack:
     file_parsers = []
     files: list[io.BytesIO] = [
@@ -139,6 +172,8 @@ with ExitStack() as stack:
             file_parsers.append(AsciiParser(f))
         elif file_type == "binary":
             file_parsers.append(BinaryParser(f))
+        elif file_type == "packedint":
+            file_parsers.append(PackedIntParser(f))
 
     line_count = 0
     position = 0

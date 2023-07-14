@@ -33,8 +33,10 @@ mkdir -p "benchmark_objects/color_search_results_t0.7"
 mkdir -p "benchmark_objects/index"
 mkdir -p "benchmark_objects/index_search_results_d1_ascii"
 mkdir -p "benchmark_objects/index_search_results_d1_binary"
+mkdir -p "benchmark_objects/index_search_results_d1_packedint"
 mkdir -p "benchmark_objects/index_search_results_d20_ascii"
 mkdir -p "benchmark_objects/index_search_results_d20_binary"
+mkdir -p "benchmark_objects/index_search_results_d20_packedint"
 mkdir -p "benchmark_objects/list_files/input"
 mkdir -p "benchmark_objects/list_files/output"
 mkdir -p "benchmark_objects/running"
@@ -62,7 +64,7 @@ wait < <(jobs -p)
 cd ..
 
 # create sbwt_index from index
-python3 scripts/modifiers/themisto_tdbg_to_sbwt.py -i benchmark_objects/index/index.tdbg -o benchmark_objects/running/index.sbwt
+python scripts/modifiers/themisto_tdbg_to_sbwt.py -i benchmark_objects/index/index.tdbg -o benchmark_objects/running/index.sbwt
 
 # run sbwt on the sequence files
 files=(`cd benchmark_objects/unzipped_seqs && ls`)
@@ -77,7 +79,7 @@ wait < <(jobs -p)
 files=(`cd benchmark_objects/index_search_results_d1_ascii && ls *.sbwt_txt`)
 for file in "${files[@]}"; do
   if [ ! -f "benchmark_objects/index_search_results_d1_ascii/${file%.*}.txt" ]; then
-    python3 scripts/modifiers/sbwt_index_results_to_ascii.py -i "benchmark_objects/index_search_results_d1_ascii/${file}" -o "benchmark_objects/index_search_results_d1_ascii/${file%.*}.txt" > /dev/null
+    python scripts/modifiers/sbwt_index_results_to_ascii.py -i "benchmark_objects/index_search_results_d1_ascii/${file}" -o "benchmark_objects/index_search_results_d1_ascii/${file%.*}.txt" > /dev/null
   fi
 done
 wait < <(jobs -p)
@@ -97,7 +99,7 @@ mv benchmark_objects/index/index.tcolors benchmark_objects/index/index_d1.tcolor
 files=(`cd benchmark_objects/color_search_results_t0.7/ && ls *.themisto_txt`)
 for file in "${files[@]}"; do
   if [ ! -f "benchmark_objects/color_search_results_t0.7/${file%.*}.txt" ]; then
-    python3 scripts/modifiers/themisto_colors_to_ascii.py -i "benchmark_objects/color_search_results_t0.7/${file}" -o "benchmark_objects/color_search_results_t0.7/${file%.*}.txt" &
+    python scripts/modifiers/themisto_colors_to_ascii.py -i "benchmark_objects/color_search_results_t0.7/${file}" -o "benchmark_objects/color_search_results_t0.7/${file%.*}.txt" &
   fi
 done
 wait < <(jobs -p)
@@ -109,14 +111,21 @@ find benchmark_objects/zipped_seqs/* > benchmark_objects/list_files/input/zipped
 find benchmark_objects/unzipped_seqs/* > benchmark_objects/list_files/input/unzipped_seqs.list
 find benchmark_objects/index_search_results_d1_ascii/* > benchmark_objects/list_files/input/index_search_results_d1_ascii.list
 cp benchmark_objects/list_files/input/index_search_results_d1_ascii.list benchmark_objects/list_files/input/index_search_results_d1_binary.list
+cp benchmark_objects/list_files/input/index_search_results_d1_ascii.list benchmark_objects/list_files/input/index_search_results_d1_packedint.list
 sed -i "s/ascii/binary/g" benchmark_objects/list_files/input/index_search_results_d1_binary.list
 sed -i "s/\.txt/\.bin/g" benchmark_objects/list_files/input/index_search_results_d1_binary.list
+sed -i "s/ascii/packedint/g" benchmark_objects/list_files/input/index_search_results_d1_packedint.list
+sed -i "s/\.txt/\.pint/g" benchmark_objects/list_files/input/index_search_results_d1_packedint.list
 cp benchmark_objects/list_files/input/index_search_results_d1_ascii.list benchmark_objects/list_files/input/index_search_results_d20_ascii.list
 sed -i "s/d1/d20/g" benchmark_objects/list_files/input/index_search_results_d20_ascii.list
 cp benchmark_objects/list_files/input/index_search_results_d1_ascii.list benchmark_objects/list_files/input/index_search_results_d20_binary.list
 sed -i "s/ascii/binary/g" benchmark_objects/list_files/input/index_search_results_d20_binary.list
 sed -i "s/\.txt/\.bin/g" benchmark_objects/list_files/input/index_search_results_d20_binary.list
 sed -i "s/d1/d20/g" benchmark_objects/list_files/input/index_search_results_d20_binary.list
+cp benchmark_objects/list_files/input/index_search_results_d1_ascii.list benchmark_objects/list_files/input/index_search_results_d20_packedint.list
+sed -i "s/ascii/packedint/g" benchmark_objects/list_files/input/index_search_results_d20_packedint.list
+sed -i "s/\.txt/\.pint/g" benchmark_objects/list_files/input/index_search_results_d20_packedint.list
+sed -i "s/d1/d20/g" benchmark_objects/list_files/input/index_search_results_d20_packedint.list
 
 # populate output list files
 files=(`cd benchmark_objects/unzipped_seqs && ls`)
@@ -126,6 +135,8 @@ printf "" > benchmark_objects/list_files/output/index_search_results_d1_ascii.li
 printf "" > benchmark_objects/list_files/output/index_search_results_d20_ascii.list
 printf "" > benchmark_objects/list_files/output/index_search_results_d1_binary.list
 printf "" > benchmark_objects/list_files/output/index_search_results_d20_binary.list
+printf "" > benchmark_objects/list_files/output/index_search_results_d1_packedint.list
+printf "" > benchmark_objects/list_files/output/index_search_results_d20_packedint.list
 for file in "${files[@]}"; do
   echo benchmark_objects/running/${file%.*}.indexes >> benchmark_objects/list_files/output/index_search_results_running.list
   echo benchmark_objects/running/${file%.*}.colors >> benchmark_objects/list_files/output/color_search_results_running.list
@@ -133,6 +144,8 @@ for file in "${files[@]}"; do
   echo benchmark_objects/index_search_results_d20_ascii/${file%.*}.indexes >> benchmark_objects/list_files/output/index_search_results_d20_ascii.list
   echo benchmark_objects/index_search_results_d1_binary/${file%.*}.indexes >> benchmark_objects/list_files/output/index_search_results_d1_binary.list
   echo benchmark_objects/index_search_results_d20_binary/${file%.*}.indexes >> benchmark_objects/list_files/output/index_search_results_d20_binary.list
+  echo benchmark_objects/index_search_results_d1_packedint/${file%.*}.indexes >> benchmark_objects/list_files/output/index_search_results_d1_packedint.list
+  echo benchmark_objects/index_search_results_d20_packedint/${file%.*}.indexes >> benchmark_objects/list_files/output/index_search_results_d20_packedint.list
 done
 
 rm benchmark_objects/running/*

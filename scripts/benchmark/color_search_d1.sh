@@ -23,16 +23,19 @@ colors_file="benchmark_objects/index/index_d1.tcolors"
 input_files=(
   "benchmark_objects/list_files/input/index_search_results_d1_ascii.list"
   "benchmark_objects/list_files/input/index_search_results_d1_binary.list"
+  "benchmark_objects/list_files/input/index_search_results_d1_packedint.list"
 )
 input_files_aliases=(
   "AsciiIndexes"
   "BinaryIndexes"
+  "PackedIntIndexes"
 )
 
 output_file="benchmark_objects/list_files/output/color_search_results_running.list"
 printing_modes=(
   "ascii"
   "binary"
+  "packedint"
   # "csv"
 )
 if [ $2 = "nvidia" ]; then

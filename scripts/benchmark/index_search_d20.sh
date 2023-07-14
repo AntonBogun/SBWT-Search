@@ -29,6 +29,7 @@ printing_modes=(
   "ascii"
   "binary"
   "bool"
+  "packedint"
 )
 
 if [ $2 = "nvidia" ]; then

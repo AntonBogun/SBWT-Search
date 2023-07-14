@@ -23,16 +23,19 @@ colors_file="benchmark_objects/index/index_d20.tcolors"
 input_files=(
   "benchmark_objects/list_files/input/index_search_results_d20_ascii.list"
   "benchmark_objects/list_files/input/index_search_results_d20_binary.list"
+  "benchmark_objects/list_files/input/index_search_results_d20_packedint.list"
 )
 input_files_aliases=(
   "AsciiIndexes"
   "BinaryIndexes"
+  "PackedIntIndexes"
 )
 
 output_file="benchmark_objects/list_files/output/color_search_results_running.list"
 printing_modes=(
   "ascii"
   "binary"
+  "packedint"
   # "csv"
 )
 if [ $2 = "nvidia" ]; then
@@ -63,6 +66,16 @@ streams_options=(1 2 3 4 5 6 7 8)
   -o "benchmark_objects/list_files/output/index_search_results_d20_binary.list" \
   -s "4" \
   -p "binary" \
+  -u 10GB \
+  -k "benchmark_objects/index/index_d20.tcolors" \
+  >> /dev/null
+
+./build/bin/sbwt_search index \
+  -i "benchmark_objects/index/index.tdbg" \
+  -q "benchmark_objects/list_files/input/unzipped_seqs.list" \
+  -o "benchmark_objects/list_files/output/index_search_results_d20_packedint.list" \
+  -s "4" \
+  -p "packedint" \
   -u 10GB \
   -k "benchmark_objects/index/index_d20.tcolors" \
   >> /dev/null
