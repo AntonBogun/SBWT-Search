@@ -267,7 +267,7 @@ class DataFrameGenerator:
             self.batch_parser(d['log']['message'])
         )
 
-    def batch_parser(self, message: str):
+    def batch_parser(self, message: str) -> int | None:
         match = re.match(r'batch (\d*)', message)
         if match:
             return match.groups()[0]
@@ -290,7 +290,7 @@ class DataFrameGenerator:
         self.dfs.append(df)
 
 
-def filter_df_by_series(df: pd.DataFrame, s: pd.Series) -> pd.DataFrame:
+def filter_df_by_series(df: pd.DataFrame, s: pd.Series | dict) -> pd.DataFrame:
     for key, value in s.items():
         df = df[df[key] == value]
     return df
