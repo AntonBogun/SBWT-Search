@@ -1,5 +1,6 @@
 #include "IndexResultsPrinter/PackedIntContinuousIndexResultsPrinter.h"
 #include "Tools/TypeDefinitions.h"
+#define __builtin_clzll_SAFE(x) ((x)?__builtin_clzll(x):64)
 
 namespace sbwt_search {
 
@@ -34,7 +35,7 @@ PackedIntContinuousIndexResultsPrinter::PackedIntContinuousIndexResultsPrinter(
 auto PackedIntContinuousIndexResultsPrinter::get_bits_per_element(u64 max_index)
   -> u64 {
   // should be ceil((log2(max_index)+1)/7), but +1 gets removed with ceil
-  return ((64-__builtin_clzll(max_index))/7+1)*8;
+  return ((64-__builtin_clzll_SAFE(max_index))/7+1)*8;
 }
 
 auto PackedIntContinuousIndexResultsPrinter::get_bits_per_seq() -> u64 {
@@ -45,7 +46,7 @@ auto PackedIntContinuousIndexResultsPrinter::get_bits_per_seq() -> u64 {
 auto PackedIntContinuousIndexResultsPrinter::do_with_result(
   vector<char>::iterator buffer, u64 result
 ) -> u64 {
-  int log2 = (64-__builtin_clzll(result));
+  int log2 = (64-__builtin_clzll_SAFE(result));
   int bytes = log2/7+1;
   for (int i = 0; i < bytes; i++) {
     *(buffer+i) = 0x80 | (result & 0x7F);

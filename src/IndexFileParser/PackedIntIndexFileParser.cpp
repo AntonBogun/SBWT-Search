@@ -56,7 +56,7 @@ auto PackedIntIndexFileParser::generate_batch(
       get_indexes().push_back((u64) c);
     } else {
       ++get_seq_statistics_batch()->found_idxs.back();
-      get_indexes().push_back(parse_number(c));
+      get_indexes().push_back(parse_number(c&0x7f));
     }
   }
   add_warp_interval();
@@ -83,10 +83,10 @@ inline auto PackedIntIndexFileParser::parse_number(u64 starting_number) -> u64 {
   u32 i=1;
   char c = '\0';
   while ((c = getc()) & 0x80) {
-    result |= ((c & 0x7f) << i*7);
+    result |= ((c & 0x7f) << (i*7));
     i++;
   }
-  return result | (c << i*7);
+  return result | (c << (i*7));
 }
 
 }  // namespace sbwt_search
