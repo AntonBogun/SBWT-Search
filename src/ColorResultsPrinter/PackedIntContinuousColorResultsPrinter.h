@@ -3,11 +3,14 @@
 
 /**
  * @file PackedIntContinuousColorResultsPrinter.h
- * @brief Outputs packed int results. Color indexes are ordered
- * and each seq is separated with newline character. When calculating memory reservations
- * for this class, we use the max_index to see how many bytes we really
- * need per index, rather than the maximum needed for the maximum u64. This
- * saves us a lot of space.
+ * @brief Outputs packed int results.
+ * Format is based on Variable Length Quantity (VLQ) encoding.
+ * Packed int format is 7 bits of data per byte, 8th bit is 0 if last byte of number,
+ * 1 otherwise. Last data bit is reserved for special values, here it is just the newline (0b01000010).
+ * Color indexes are ordered and each seq is separated with newline character.
+ * When calculating memory reservations for this class, we use the max_index to
+ * see how many bytes we really need per index, rather than the maximum needed for 
+ * the maximum u64. This saves us a lot of space.
  */
 
 #include "ColorResultsPrinter/ContinuousColorResultsPrinter.hpp"

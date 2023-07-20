@@ -3,7 +3,7 @@
 
 /**
  * @file PackedIntIndexFileParser.h
- * @brief Index file parser for packed int files
+ * @brief Index file parser for packed int files (VLQ encoding)
  */
 
 #include <memory>

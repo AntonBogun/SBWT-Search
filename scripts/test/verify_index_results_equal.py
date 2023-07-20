@@ -177,7 +177,7 @@ class PackedIntParser(FileParser):
             if len(b) == 0:
                 return ("EOF", )
             c=b[0]
-            n|=((c&0x7f)<<i)
+            n|=((c&0x7f)<<(i*7))
             if not(c&0x80):
                 return ("result",n)
 
@@ -198,6 +198,8 @@ with ExitStack() as stack:
             file_parsers.append(BoolParser(f))
         elif file_type == "packedint":
             file_parsers.append(PackedIntParser(f))
+        else:
+            print(f"unknown type: {file_type}")
 
     line_count = 0
     position = 0

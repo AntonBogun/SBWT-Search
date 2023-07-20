@@ -4,6 +4,7 @@
 /**
  * @file PackedIntContinuousIndexResultsPrinter.h
  * @brief Inherits ContinuousIndexResultsPrinter and prints out packed int values.
+ * Format is based on Variable Length Quantity (VLQ) encoding.
  * Packed int format is 7 bits of data per byte, 8th bit is 1 if this is not the
  * last byte of the number, 0 if it is. Last data bit is reserved to represent
  * special values: 0 for not-found, 1 for invalid, 2 for newline. This means

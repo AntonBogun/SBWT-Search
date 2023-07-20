@@ -39,7 +39,7 @@ function run_tests() {
     do
       expected="test_objects/full_pipeline/index_search/expected/${file}"
       actual="tmp/index_pipeline_test/actual/${no_extension}${extension}"
-      python scripts/test/verify_index_results_equal.py \
+      python3 scripts/test/verify_index_results_equal.py \
         -x ${expected} \
         -y ${actual} \
         --quiet

@@ -64,7 +64,7 @@ wait < <(jobs -p)
 cd ..
 
 # create sbwt_index from index
-python scripts/modifiers/themisto_tdbg_to_sbwt.py -i benchmark_objects/index/index.tdbg -o benchmark_objects/running/index.sbwt
+python3 scripts/modifiers/themisto_tdbg_to_sbwt.py -i benchmark_objects/index/index.tdbg -o benchmark_objects/running/index.sbwt
 
 # run sbwt on the sequence files
 files=(`cd benchmark_objects/unzipped_seqs && ls`)
@@ -79,7 +79,7 @@ wait < <(jobs -p)
 files=(`cd benchmark_objects/index_search_results_d1_ascii && ls *.sbwt_txt`)
 for file in "${files[@]}"; do
   if [ ! -f "benchmark_objects/index_search_results_d1_ascii/${file%.*}.txt" ]; then
-    python scripts/modifiers/sbwt_index_results_to_ascii.py -i "benchmark_objects/index_search_results_d1_ascii/${file}" -o "benchmark_objects/index_search_results_d1_ascii/${file%.*}.txt" > /dev/null
+    python3 scripts/modifiers/sbwt_index_results_to_ascii.py -i "benchmark_objects/index_search_results_d1_ascii/${file}" -o "benchmark_objects/index_search_results_d1_ascii/${file%.*}.txt" > /dev/null
   fi
 done
 wait < <(jobs -p)
@@ -99,7 +99,7 @@ mv benchmark_objects/index/index.tcolors benchmark_objects/index/index_d1.tcolor
 files=(`cd benchmark_objects/color_search_results_t0.7/ && ls *.themisto_txt`)
 for file in "${files[@]}"; do
   if [ ! -f "benchmark_objects/color_search_results_t0.7/${file%.*}.txt" ]; then
-    python scripts/modifiers/themisto_colors_to_ascii.py -i "benchmark_objects/color_search_results_t0.7/${file}" -o "benchmark_objects/color_search_results_t0.7/${file%.*}.txt" &
+    python3 scripts/modifiers/themisto_colors_to_ascii.py -i "benchmark_objects/color_search_results_t0.7/${file}" -o "benchmark_objects/color_search_results_t0.7/${file%.*}.txt" &
   fi
 done
 wait < <(jobs -p)

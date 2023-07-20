@@ -34,7 +34,7 @@ PackedIntContinuousIndexResultsPrinter::PackedIntContinuousIndexResultsPrinter(
 auto PackedIntContinuousIndexResultsPrinter::get_bits_per_element(u64 max_index)
   -> u64 {
   // should be ceil((log2(max_index)+1)/7), but +1 gets removed with ceil
-  return (64-__builtin_clzll(max_index))/7+1;
+  return ((64-__builtin_clzll(max_index))/7+1)*8;
 }
 
 auto PackedIntContinuousIndexResultsPrinter::get_bits_per_seq() -> u64 {
@@ -46,7 +46,7 @@ auto PackedIntContinuousIndexResultsPrinter::do_with_result(
   vector<char>::iterator buffer, u64 result
 ) -> u64 {
   int log2 = (64-__builtin_clzll(result));
-  int bytes =log2/7+1;
+  int bytes = log2/7+1;
   for (int i = 0; i < bytes; i++) {
     *(buffer+i) = 0x80 | (result & 0x7F);
     result >>= 7;
@@ -81,7 +81,7 @@ auto PackedIntContinuousIndexResultsPrinter::do_get_extension() -> string {
   return ".pint";
 }
 auto PackedIntContinuousIndexResultsPrinter::do_get_format() -> string {
-  return "PackedInt";
+  return "packedint";
 }
 auto PackedIntContinuousIndexResultsPrinter::do_get_version() -> string {
   return "v1.0";

@@ -37,7 +37,7 @@ function run_tests() {
     do
       expected="test_objects/full_pipeline/color_search/expected/${file%.*}.colors.txt"
       actual="tmp/color_pipeline_test/actual/${file%.*}.colors${extension}"
-      python scripts/test/verify_color_results_equal.py \
+      python3 scripts/test/verify_color_results_equal.py \
         -x ${expected} \
         -y ${actual} \
         --quiet

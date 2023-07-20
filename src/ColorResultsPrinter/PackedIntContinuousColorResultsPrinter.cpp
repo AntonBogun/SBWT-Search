@@ -45,7 +45,7 @@ auto PackedIntContinuousColorResultsPrinter::do_get_extension() -> string {
   return ".pint";
 }
 auto PackedIntContinuousColorResultsPrinter::do_get_format() -> string {
-  return "PackedInt";
+  return "packedint";
 }
 auto PackedIntContinuousColorResultsPrinter::do_get_version() -> string {
   return "v1.0";
