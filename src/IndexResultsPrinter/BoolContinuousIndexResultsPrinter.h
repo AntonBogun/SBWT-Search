@@ -38,7 +38,7 @@ public:
   );
 
   auto static get_bits_per_element() -> u64;
-  auto static get_bits_per_read() -> u64;
+  auto static get_bits_per_seq() -> u64;
 
 protected:
   auto do_get_extension() -> string;

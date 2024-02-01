@@ -46,9 +46,7 @@ GpuSbwtContainer::GpuSbwtContainer(
      layer_1_2[2]->data(),
      layer_1_2[3]->data()}
   ));
-  key_kmer_marks = make_unique<GpuPointer<u64>>(
-    cpu_key_kmer_marks.data(), cpu_key_kmer_marks.size()
-  );
+  key_kmer_marks = make_unique<GpuPointer<u64>>(cpu_key_kmer_marks);
 }
 
 auto GpuSbwtContainer::get_max_index() const -> const u64 { return max_index; }

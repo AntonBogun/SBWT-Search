@@ -30,6 +30,7 @@ device_to_machine = {
 }
 file_to_alias = {
     'unzipped_seqs': 'Unzipped',
+    'unzipped_seqs_DEBUG': 'Unzipped_debug',
     'zipped_seqs': 'Zipped',
     'AsciiIndexes': 'ASCII',
     'BinaryIndexes': 'Binary',
@@ -51,15 +52,15 @@ ordered_components = [
     # 'Presearcher',
     # 'PresearchFunction',
     'MemoryAllocator',
-    # 'Querier',
+    'Querier',
     'IndexFileParser',
     'SequenceFileParser',
     'PositionsBuilder',
     'SeqToBitsConverter',
     'Searcher',
-    # 'SearcherCopyToGpu',
-    # 'SearcherSearch',
-    # 'SearcherCopyFromGpu',
+    'SearcherCopyToGpu',
+    'SearcherSearch',
+    'SearcherCopyFromGpu',
     'ResultsPostProcessor',
     'ResultsPrinter',
 ]
@@ -117,7 +118,7 @@ parser.add_argument(
     required=True,
 )
 #!DEBUG
-args = vars(parser.parse_args(["-i","/scratch/dongelr1/bogunant/SBWT-Search/benchmark_results/index_d20_2023-07-13_23-40-34_+0300/","-d","20","-t","Index"]))
+args = vars(parser.parse_args(["-i","/scratch/dongelr1/bogunant/SBWT-Search/benchmark_results/index_d20_2023-09-11_16-27-34_+0300","-d","20","-t","Index"]))
 # args = vars(parser.parse_args())
 
 

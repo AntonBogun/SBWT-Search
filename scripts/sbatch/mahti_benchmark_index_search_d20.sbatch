@@ -16,7 +16,7 @@
 ##SBATCH --partition=gputest
 ##SBATCH --time=00:15:00
 
-#SBATCH --time=5:00:00
+#SBATCH --time=10:00:00
 #SBATCH --partition=gpusmall
 
 ## Load in modules
@@ -39,6 +39,7 @@ t1=$(date +%s%3N)
 cp -r "${OLD_PWD}/src/" "${LOCAL_SCRATCH}/SBWT-Search/src" &
 cp -r "${OLD_PWD}/cmake/" "${LOCAL_SCRATCH}/SBWT-Search/cmake" &
 cp -r "${OLD_PWD}/scripts/" "${LOCAL_SCRATCH}/SBWT-Search/scripts" &
+cp -r "${OLD_PWD}/formatdiff/" "${LOCAL_SCRATCH}/SBWT-Search/formatdiff" &
 cp "${OLD_PWD}/CMakeLists.txt" "${LOCAL_SCRATCH}/SBWT-Search/CMakeLists.txt" &
 wait < <(jobs -p) # wait for jobs to finish
 cp -r "${OLD_PWD}/benchmark_objects/" "${LOCAL_SCRATCH}/SBWT-Search/benchmark_objects" &
@@ -51,3 +52,6 @@ echo "Time taken to copy and build in LOCAL_SCRATCH: $((t2-t1)) ms" >> "${OLD_PW
 
 bash -x scripts/benchmark/index_search_d20.sh "${OLD_PWD}/benchmark_results/${OUTPUT_FOLDER}/benchmark_out.txt" "nvidia"
 cd "${OLD_PWD}"
+
+rm -f ${OLD_PWD}/benchmark_objects/index_search_DIFF/*
+mv ${LOCAL_SCRATCH}/SBWT-Search/benchmark_objects/index_search_DIFF/* "${OLD_PWD}/benchmark_objects/index_search_DIFF/"

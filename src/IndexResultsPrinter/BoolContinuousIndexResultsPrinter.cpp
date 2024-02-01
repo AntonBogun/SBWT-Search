@@ -36,7 +36,7 @@ auto BoolContinuousIndexResultsPrinter::get_bits_per_element() -> u64 {
   return bits_in_byte;
 }
 
-auto BoolContinuousIndexResultsPrinter::get_bits_per_read() -> u64 {
+auto BoolContinuousIndexResultsPrinter::get_bits_per_seq() -> u64 {
   return bits_in_byte;
 }
 

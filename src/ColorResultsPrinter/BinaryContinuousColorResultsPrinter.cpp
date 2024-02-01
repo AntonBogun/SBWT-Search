@@ -51,7 +51,7 @@ auto BinaryContinuousColorResultsPrinter::do_get_version() -> string {
 auto BinaryContinuousColorResultsPrinter::do_with_newline(
   vector<u64>::iterator buffer
 ) -> u64 {
-  *buffer = static_cast<u64>(-1);
+  *buffer = static_cast<u64>(-3);
   return 1;
 }
 auto BinaryContinuousColorResultsPrinter::do_with_result(

@@ -231,7 +231,7 @@ auto IndexSearchMain::get_results_printer_bits_per_seq() -> u64 {
     return BinaryContinuousIndexResultsPrinter::get_bits_per_seq();
   }
   if (get_args().get_print_mode() == "bool") {
-    return BinaryContinuousIndexResultsPrinter::get_bits_per_seq();
+    return BoolContinuousIndexResultsPrinter::get_bits_per_seq();
   }
   if (get_args().get_print_mode() == "packedint") {
     return PackedIntContinuousIndexResultsPrinter::get_bits_per_seq();

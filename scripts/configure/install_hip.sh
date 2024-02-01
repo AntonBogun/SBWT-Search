@@ -8,6 +8,9 @@
 # necessary items on each platform, the user is encouraged to look at the
 # :ref:`Tools` section of the documentation
 
+#nvidia
+#rocm-5.4.x
+
 TARGET_DEVICE=$1
 ROCM_BRANCH=$2
 
